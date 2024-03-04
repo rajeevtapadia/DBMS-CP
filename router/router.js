@@ -12,18 +12,19 @@ router.get("/auth/login", (req, res) => {
 });
 
 router.post("/auth/login", async (req, res) => {
+    console.log(req.body);
   const { username, password } = req.body;
-
   try {
     const results = await connection.query(
       "SELECT * FROM users WHERE username = ? AND password = ?",
       [username, password]
     );
-    console.log(results[0][0].id);
-
+    console.log(results);
+    
     if (results.length === 0) {
-      res.status(401).send("Invalid credentials");
+        res.status(401).send("Invalid credentials");
     } else {
+        // console.log(results[0][0].id);
       //   req.session.user = results[0];
       //   res.send("Login success");
       res.redirect(`/dashboard/${results[0][0].id}`);
