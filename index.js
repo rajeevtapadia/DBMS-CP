@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 import express from "express";
 import path from "path";
-import connectDB from "./models/connection.js";
 import router from "./router/router.js";
+import mysql from "mysql2/promise"
 dotenv.config();
 
 const app = express();
@@ -15,8 +15,22 @@ app.use(express.static(path.join(path.resolve(), "public"))); //all css files an
 
 app.use(router);
 
-connectDB().then(() => {
+let connection;
+
+try {
+  const config = {
+    host: process.env.HOST,
+    user: process.env.MYSQL_USERNAME,
+    password: process.env.MYSQL_PASS,
+      database: process.env.DB_NAME,
+  };
+  connection = await mysql.createConnection(config);
+  console.log("Connected to the MySQL database!");
   app.listen(process.env.PORT, () => {
     console.log("server is up at ", process.env.PORT);
   });
-});
+} catch (error) {
+  console.error("Error connecting to the MySQL database:", error);
+}
+
+export { connection };
