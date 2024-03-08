@@ -4,7 +4,7 @@ import { connection } from "../index.js";
 const dashRouter = Router();
 
 dashRouter.get("/:id", async (req, res) => {
-  console.log(req.params.id);
+  //   console.log(req.params.id);
   const id = req.params.id;
   const [[user]] = await connection.query(
     "SELECT * FROM users WHERE id = ?",
@@ -14,7 +14,6 @@ dashRouter.get("/:id", async (req, res) => {
     "SELECT * FROM playlists WHERE user_id=?",
     id
   );
-  console.log(user);
   res.render("dashboard.hbs", { playlists, user });
 });
 
@@ -32,6 +31,18 @@ dashRouter.get("/playlists/:id", async (req, res) => {
   );
   console.log(songs);
   res.render("playlist.hbs", { songs });
+});
+
+dashRouter.post("/:userId/playlists/create", async (req, res) => {
+  const userId = req.params.userId;
+  const newPlaylist = req.body.name;
+  console.log(userId);
+  connection.query(`INSERT INTO playlists (name, user_id) VALUES (?, ?)`, [
+    newPlaylist,
+    userId,
+  ]);
+  console.log("playlist created successfully");
+  res.status(200).redirect(`/dashboard/${userId}`);
 });
 
 export default dashRouter;
