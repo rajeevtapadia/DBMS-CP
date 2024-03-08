@@ -30,6 +30,17 @@ playRouter.post("/:userId/create", async (req, res) => {
   res.status(200).redirect(`/dashboard/${userId}`);
 });
 
+playRouter.post("/:userId/delete/:playlistId", async (req, res) => {
+  const { userId, playlistId } = req.params;
 
+  await connection.query(
+    "DELETE FROM playlist_songs WHERE playlist_id = ?",
+    playlistId
+  );
+  await connection.query("DELETE FROM playlists WHERE id = ?", playlistId);
+
+  console.log("playlist deleted successfully");
+  res.status(200).redirect(`/dashboard/${userId}`);
+});
 
 export default playRouter;
