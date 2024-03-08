@@ -1,0 +1,38 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    {{!-- <h1>Welcome {{user.username}}</h1> --}}
+    <h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Duration</th>
+            <th>Artist ID</th>
+            <th>Playlist ID</th>
+            <th>Song ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each songs}}
+            <tr>
+              <td>{{this.id}}</td>
+              <td>{{this.title}}</td>
+              <td>{{this.duration}}</td>
+              <td>{{this.artist_id}}</td>
+              <td>{{this.playlist_id}}</td>
+              <td>{{this.song_id}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+
+    </h2>
+
+  </body>
+</html>
