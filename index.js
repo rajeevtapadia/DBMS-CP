@@ -1,10 +1,11 @@
 import dotenv from "dotenv";
 import express from "express";
+import exphbs from "express-handlebars";
 import mysql from "mysql2/promise";
 import path from "path";
 import authRouter from "./router/auth.js";
 import dashRouter from "./router/dashboard.js";
-import exphbs from "express-handlebars";
+import playRouter from "./router/playlist.js";
 import router from "./router/router.js";
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.engine("hbs", exphbs.engine({ extname: ".hbs", defaultLayout: false }));
 
 app.use("/auth", authRouter);
 app.use("/dashboard", dashRouter);
+app.use("/playlists", playRouter)
 app.use("/", router);
 
 let connection;
@@ -41,3 +43,4 @@ try {
 }
 
 export { connection };
+
