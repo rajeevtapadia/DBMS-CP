@@ -3,6 +3,7 @@ import { connection } from "../index.js";
 
 const playRouter = Router();
 
+// fetch songs in a playlist
 playRouter.get("/:userId/:playlistId", async (req, res) => {
   const { userId, playlistId } = req.params;
 
@@ -14,9 +15,10 @@ playRouter.get("/:userId/:playlistId", async (req, res) => {
     playlistId
   );
 
-  res.render("playlist.hbs", { songs });
+  res.render("playlist.hbs", { songs, playlistId, userId });
 });
 
+// create a playlist
 playRouter.post("/:userId/create", async (req, res) => {
   const userId = req.params.userId;
   const newPlaylist = req.body.name;
@@ -30,6 +32,7 @@ playRouter.post("/:userId/create", async (req, res) => {
   res.status(200).redirect(`/dashboard/${userId}`);
 });
 
+// delete a playlist
 playRouter.post("/:userId/delete/:playlistId", async (req, res) => {
   const { userId, playlistId } = req.params;
 
@@ -41,6 +44,20 @@ playRouter.post("/:userId/delete/:playlistId", async (req, res) => {
 
   console.log("playlist deleted successfully");
   res.status(200).redirect(`/dashboard/${userId}`);
+});
+
+// add a song to a playlist
+playRouter.post("/:userId/add/:playlistId", (req, res) => {
+  const { userId, playlistId } = req.params;
+  const songId = req.body.songId;
+
+  connection.query(
+    `INSERT INTO playlist_songs (playlist_id, song_id) 
+  VALUES (?, ?)`,
+    [playlistId, songId]
+  );
+
+  res.redirect(`/playlists/${userId}/${playlistId}`);
 });
 
 export default playRouter;

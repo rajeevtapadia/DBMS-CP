@@ -17,7 +17,7 @@ authRouter.post("/login", async (req, res) => {
     );
     console.log(results);
 
-    if (results.length === 0) {
+    if (results[0].length === 0) {
       res.status(401).send("Invalid credentials");
     } else {
       // console.log(results[0][0].id);
