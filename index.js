@@ -3,10 +3,11 @@ import express from "express";
 import exphbs from "express-handlebars";
 import mysql from "mysql2/promise";
 import path from "path";
-import userAuth from "./router/userAuth.js";
+import artistAuth from "./router/artistAuth.js";
 import dashRouter from "./router/dashboard.js";
 import playRouter from "./router/playlist.js";
 import router from "./router/router.js";
+import userAuth from "./router/userAuth.js";
 dotenv.config();
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(express.static(path.join(path.resolve(), "public"))); //all css files an
 app.engine("hbs", exphbs.engine({ extname: ".hbs", defaultLayout: false }));
 
 app.use("/auth/user", userAuth);
+app.use("/auth/artist", artistAuth)
 app.use("/dashboard", dashRouter);
 app.use("/playlists", playRouter)
 app.use("/", router);
