@@ -36,14 +36,16 @@ playRouter.post("/:userId/create", async (req, res) => {
 playRouter.post("/:userId/delete/:playlistId", async (req, res) => {
   const { userId, playlistId } = req.params;
 
-  await connection.query(
-    "DELETE FROM playlist_songs WHERE playlist_id = ?",
-    playlistId
-  );
-  await connection.query("DELETE FROM playlists WHERE id = ?", playlistId);
-
-  console.log("playlist deleted successfully");
-  res.status(200).redirect(`/dashboard/${userId}`);
+  connection
+    .query("DELETE FROM playlist_songs WHERE playlist_id = ?", playlistId)
+    .then(() => {
+      connection
+        .query("DELETE FROM playlists WHERE id = ?", playlistId)
+        .then(() => {
+          console.log("playlist deleted successfully");
+          res.status(200).redirect(`/dashboard/${userId}`);
+        });
+    });
 });
 
 // add a song to a playlist
@@ -51,13 +53,30 @@ playRouter.post("/:userId/add/:playlistId", (req, res) => {
   const { userId, playlistId } = req.params;
   const songId = req.body.songId;
 
-  connection.query(
-    `INSERT INTO playlist_songs (playlist_id, song_id) 
-  VALUES (?, ?)`,
-    [playlistId, songId]
-  );
+  connection
+    .query(
+      `INSERT INTO playlist_songs (playlist_id, song_id) 
+      VALUES (?, ?)`,
+      [playlistId, songId]
+    )
+    .then(() => {
+      res.redirect(`/playlists/${userId}/${playlistId}`);
+    });
+});
 
-  res.redirect(`/playlists/${userId}/${playlistId}`);
+// delete a single song from a playlist
+playRouter.post("/:userId/deletesong/:playlistId/:songId", async (req, res) => {
+  const { userId, playlistId, songId } = req.params;
+
+  connection
+    .query(
+      `DELETE FROM playlist_songs 
+      WHERE song_id= ? AND playlist_id = ?`,
+      [songId, playlistId]
+    )
+    .then(() => {
+      res.redirect(`/playlists/${userId}/${playlistId}`);
+    });
 });
 
 export default playRouter;
