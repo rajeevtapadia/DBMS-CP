@@ -12,15 +12,14 @@ artistAuth.post("/login", async (req, res) => {
   const { username, password } = req.body;
   try {
     const results = await connection.query(
-      "SELECT * FROM users WHERE username = ? AND password = ?",
+      "SELECT * FROM artists WHERE name = ? AND password = ?",
       [username, password]
     );
 
     if (results[0].length === 0) {
       res.status(401).send("Invalid credentials");
     } else {
-      // todo change
-      res.redirect(`/dashboard/${results[0][0].id}`);
+      res.redirect(`/artist/dashboard/${results[0][0].id}`);
     }
   } catch (error) {
     res.status(500).send("Internal Server Error");
