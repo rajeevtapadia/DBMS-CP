@@ -56,7 +56,7 @@ playRouter.post("/:userId/add/:playlistId", (req, res) => {
   connection
     .query(
       `INSERT INTO playlist_songs (playlist_id, song_id) 
-      VALUES (?, ?)`,
+        VALUES (?, ?)`,
       [playlistId, songId]
     )
     .then(() => {
@@ -71,7 +71,7 @@ playRouter.post("/:userId/deletesong/:playlistId/:songId", async (req, res) => {
   connection
     .query(
       `DELETE FROM playlist_songs 
-      WHERE song_id= ? AND playlist_id = ?`,
+        WHERE song_id= ? AND playlist_id = ?`,
       [songId, playlistId]
     )
     .then(() => {
