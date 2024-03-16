@@ -1,0 +1,55 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Artist Dashboard</title>
+  </head>
+  <body>
+    <h1>Welcome Artist: {{user.username}}</h1>
+    <h2>Your Albums</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each albums}}
+          <tr>
+            <td>{{this.id}}</td>
+            <td><a href="/playlists/{{this.user_id}}/{{this.id}}">
+                {{this.name}}</a></td>
+            <td>
+              <form
+                action="/playlists/{{this.user_id}}/delete/{{this.id}}"
+                method="POST"
+                style="display: inline-block;"
+              >
+                {{#if csrfToken}}
+                  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                {{/if}}
+                <button type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <h2>Create Playlist</h2>
+    <form action="/playlists/{{user.id}}/create" method="POST">
+      {{#if csrfToken}}
+        <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+      {{/if}}
+
+      <label for="playlistName">Playlist Name:</label>
+      <input type="text" id="playlistName" name="name" required />
+      <br />
+
+      <button type="submit">Create Playlist</button>
+    </form>
+
+  </body>
+</html>
