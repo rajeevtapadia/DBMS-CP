@@ -14,7 +14,7 @@ albumRouter.get("/:artistId/:albumId", async (req, res) => {
     albumId
   );
 
-  res.render("playlist.hbs", { songs, albumId, artistId });
+  res.render("albums.hbs", { songs, albumId, artistId });
 });
 
 // create an album
@@ -23,14 +23,42 @@ albumRouter.post("/:artistId/create", async (req, res) => {
   const newAlbum = req.body.title;
   const releaseDate = req.body.release_date;
 
-  connection.query(
-    `INSERT INTO albums (title, release_date, artist_id) 
+  connection
+    .query(
+      `INSERT INTO albums (title, release_date, artist_id) 
       VALUES (?, ?, ?)`,
-    [newAlbum, releaseDate, artistId]
-  );
+      [newAlbum, releaseDate, artistId]
+    )
+    .then(() => {
+      console.log("album created successfully", newAlbum);
+      res.status(200).redirect(`/artist/dashboard/${artistId}`);
+    });
+});
 
-  console.log("album created successfully", newAlbum);
-  res.status(200).redirect(`/artist/dashboard/${artistId}`);
+// delete a album
+albumRouter.post("/:artistId/delete/:albumId", async (req, res) => {
+  const { artistId, albumId } = req.params;
+
+  connection.query("DELETE FROM albums WHERE id = ?", albumId).then(() => {
+    console.log("album deleted successfully");
+    res.status(200).redirect(`/artist/dashboard/${artistId}`);
+  });
+});
+
+// add a song to a album
+albumRouter.post("/:artistId/add/:albumId", (req, res) => {
+  const { artistId, albumId } = req.params;
+  const songId = req.body.songId;
+
+  connection
+    .query(
+      `UPDATE songs SET album_id = ?
+        WHERE id = ?`,
+      [albumId, songId]
+    )
+    .then(() => {
+      res.redirect(`/album/${artistId}/${albumId}`);
+    });
 });
 
 export default albumRouter;
