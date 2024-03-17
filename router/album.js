@@ -13,6 +13,7 @@ albumRouter.get("/:artistId/:albumId", async (req, res) => {
       WHERE album_id = ?`,
     albumId
   );
+  console.log(songs);
 
   res.render("albums.hbs", { songs, albumId, artistId });
 });
@@ -55,6 +56,21 @@ albumRouter.post("/:artistId/add/:albumId", (req, res) => {
       `UPDATE songs SET album_id = ?
         WHERE id = ?`,
       [albumId, songId]
+    )
+    .then(() => {
+      res.redirect(`/album/${artistId}/${albumId}`);
+    });
+});
+
+// delete a single song from a playlist
+albumRouter.post("/:artistId/deletesong/:albumId/:songId", async (req, res) => {
+  const { artistId, albumId, songId } = req.params;
+
+  connection
+    .query(
+      `UPDATE songs SET album_id = NULL
+        WHERE id = ?`,
+      songId
     )
     .then(() => {
       res.redirect(`/album/${artistId}/${albumId}`);
