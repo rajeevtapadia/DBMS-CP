@@ -17,4 +17,20 @@ albumRouter.get("/:artistId/:albumId", async (req, res) => {
   res.render("playlist.hbs", { songs, albumId, artistId });
 });
 
+// create an album
+albumRouter.post("/:artistId/create", async (req, res) => {
+  const artistId = req.params.artistId;
+  const newAlbum = req.body.title;
+  const releaseDate = req.body.release_date;
+
+  connection.query(
+    `INSERT INTO albums (title, release_date, artist_id) 
+      VALUES (?, ?, ?)`,
+    [newAlbum, releaseDate, artistId]
+  );
+
+  console.log("album created successfully", newAlbum);
+  res.status(200).redirect(`/artist/dashboard/${artistId}`);
+});
+
 export default albumRouter;

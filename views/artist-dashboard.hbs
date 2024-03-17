@@ -39,13 +39,16 @@
     </table>
 
     <h2>Create Album</h2>
-    <form action="/playlists/{{user.id}}/create" method="POST">
+    <form action="/album/{{artist.id}}/create" method="POST">
       {{#if csrfToken}}
         <input type="hidden" name="_csrf" value="{{csrfToken}}" />
       {{/if}}
 
       <label for="playlistName">Album Name:</label>
-      <input type="text" id="playlistName" name="name" required />
+      <input type="text" id="playlistName" name="title" required />
+
+      <label for="playlistName">Release Date:</label>
+      <input type="date" id="playlistName" name="release_date" required />
       <br />
 
       <button type="submit">Create Album</button>
