@@ -34,17 +34,16 @@ artistAuth.get("/signup", (req, res) => {
 artistAuth.post("/signup", (req, res) => {
   const { username, password, email } = req.body;
 
-  connection.query(
-    "INSERT INTO artists (name, password, email) VALUES (?, ?, ?)",
-    [username, password, email],
-    (error) => {
-      if (error) {
-        res.status(500).send("Internal Server Error");
-      } else {
-        res.status(200).redirect("/auth/artist/login");
-      }
-    }
-  );
+  connection
+    .query("INSERT INTO artists (name, password, email) VALUES (?, ?, ?)", [
+      username,
+      password,
+      email,
+    ])
+    .then(() => {
+      console.log(`artist created with username: ${username}`);
+      res.status(200).redirect("/auth/artist/login");
+    });
 });
 
 export default artistAuth;
