@@ -5,7 +5,7 @@
     <title>Artist Dashboard</title>
   </head>
   <body>
-    <h1>Welcome Artist: {{user.username}}</h1>
+    <h1>Welcome Artist: {{artist.name}}</h1>
     <h2>Your Albums</h2>
     <table>
       <thead>
@@ -20,7 +20,7 @@
           <tr>
             <td>{{this.id}}</td>
             <td><a href="/playlists/{{this.user_id}}/{{this.id}}">
-                {{this.name}}</a></td>
+                {{this.title}}</a></td>
             <td>
               <form
                 action="/playlists/{{this.user_id}}/delete/{{this.id}}"
