@@ -13,7 +13,7 @@ artistDash.get("/:id", async (req, res) => {
     "SELECT * FROM albums WHERE artist_id = ?",
     id
   );
-  res.render("artist-dashboard.hbs", {albums, artist});
+  res.render("artist-dashboard.hbs", { albums, artist });
 });
 
 export default artistDash;

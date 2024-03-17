@@ -3,6 +3,7 @@ import express from "express";
 import exphbs from "express-handlebars";
 import mysql from "mysql2/promise";
 import path from "path";
+import albumRouter from "./router/album.js";
 import artistAuth from "./router/artistAuth.js";
 import artistDash from "./router/artistDash.js";
 import dashRouter from "./router/dashboard.js";
@@ -26,6 +27,7 @@ app.use("/auth/artist", artistAuth);
 app.use("/dashboard", dashRouter);
 app.use("/artist/dashboard", artistDash);
 app.use("/playlists", playRouter);
+app.use("/album", albumRouter)
 app.use("/", router);
 
 let connection;
@@ -47,3 +49,4 @@ try {
 }
 
 export { connection };
+

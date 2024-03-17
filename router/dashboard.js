@@ -3,6 +3,7 @@ import { connection } from "../index.js";
 
 const dashRouter = Router();
 
+// fetch logged in user's playlists
 dashRouter.get("/:id", async (req, res) => {
   const id = req.params.id;
   const [[user]] = await connection.query(
@@ -10,7 +11,7 @@ dashRouter.get("/:id", async (req, res) => {
     id
   );
   const [playlists] = await connection.query(
-    "SELECT * FROM playlists WHERE user_id=?",
+    "SELECT * FROM playlists WHERE user_id = ?",
     id
   );
   res.render("dashboard.hbs", { playlists, user });

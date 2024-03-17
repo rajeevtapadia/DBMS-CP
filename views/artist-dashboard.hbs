@@ -19,11 +19,11 @@
         {{#each albums}}
           <tr>
             <td>{{this.id}}</td>
-            <td><a href="/playlists/{{this.user_id}}/{{this.id}}">
+            <td><a href="/album/{{this.artist_id}}/{{this.id}}">
                 {{this.title}}</a></td>
             <td>
               <form
-                action="/playlists/{{this.user_id}}/delete/{{this.id}}"
+                action="/album/{{this.artist_id}}/delete/{{this.id}}"
                 method="POST"
                 style="display: inline-block;"
               >
