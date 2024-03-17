@@ -37,13 +37,19 @@ albumRouter.post("/:artistId/create", async (req, res) => {
 });
 
 // delete a album
+// NOTE: removeing an album doesn't delete the songs it has
 albumRouter.post("/:artistId/delete/:albumId", async (req, res) => {
   const { artistId, albumId } = req.params;
-
-  connection.query("DELETE FROM albums WHERE id = ?", albumId).then(() => {
-    console.log("album deleted successfully");
-    res.status(200).redirect(`/artist/dashboard/${artistId}`);
-  });
+  // set fk in songs table to null
+  connection
+    .query("UPDATE songs SET album_id = NULL WHERE album_id = ?", albumId)
+    .then(() => {
+      // remove album from albums table
+      connection.query("DELETE FROM albums WHERE id = ?", albumId).then(() => {
+        console.log("album deleted successfully");
+        res.status(200).redirect(`/artist/dashboard/${artistId}`);
+      });
+    });
 });
 
 // add a song to a album
@@ -62,7 +68,7 @@ albumRouter.post("/:artistId/add/:albumId", (req, res) => {
     });
 });
 
-// delete a single song from a playlist
+// delete a single song from a album
 albumRouter.post("/:artistId/deletesong/:albumId/:songId", async (req, res) => {
   const { artistId, albumId, songId } = req.params;
 
