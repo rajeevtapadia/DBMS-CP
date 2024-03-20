@@ -1,0 +1,48 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search</title>
+  </head>
+  <body>
+    <h2>Search Songs</h2>
+    <form action="search" method="POST">
+      {{#if csrfToken}}
+        <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+      {{/if}}
+
+      <label for="searchParam">Search by Title</label>
+      <input type="text" id="searchParam" name="searchParam" required />
+      <br />
+
+      <button type="submit">Search</button>
+
+      {{#if matches}}
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Duration</th>
+              <th>Artist Name</th>
+              <th>Album Name</th>
+              <th>Release Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each matches}}
+              <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.songTitle}}</td>
+                <td>{{this.duration}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.albumTitle}}</td>
+                <td>{{this.release_date}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/if}}
+    </form>
+  </body>
+</html>
