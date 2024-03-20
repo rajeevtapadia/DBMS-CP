@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1>Welcome Artist: {{artist.name}}</h1>
-    <h2>Your Albums</h2>
+    <h2>My Albums</h2>
     <table>
       <thead>
         <tr>
@@ -52,6 +52,55 @@
       <br />
 
       <button type="submit">Create Album</button>
+    </form>
+
+    <h2>My Songs</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Duration</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each allSongs}}
+          <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.duration}}</td>
+            <td>
+              <form
+                action="song/delete/{{this.id}}"
+                method="POST"
+                style="display: inline-block;"
+              >
+                {{#if csrfToken}}
+                  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                {{/if}}
+                <button type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+
+    <h2>Add a Song</h2>
+    <form action="song/add" method="POST">
+      {{#if csrfToken}}
+        <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+      {{/if}}
+
+      <label for="title">Song Title:</label>
+      <input type="text" id="title" name="title" required />
+
+      <label for="duration">Duration</label>
+      <input type="number" id="duration" name="duration" required />
+      <br />
+
+      <button type="submit">Add Song</button>
     </form>
 
   </body>
