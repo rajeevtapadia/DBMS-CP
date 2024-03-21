@@ -10,11 +10,10 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Title</th>
+            <th>Song Title</th>
             <th>Duration</th>
-            <th>Artist ID</th>
-            <th>Playlist ID</th>
-            <th>Song ID</th>
+            <th>Artist Name</th>
+            <th>Album Title</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -22,11 +21,10 @@
           {{#each songs}}
             <tr>
               <td>{{this.id}}</td>
-              <td>{{this.title}}</td>
+              <td>{{this.songTitle}}</td>
               <td>{{this.duration}}</td>
-              <td>{{this.artist_id}}</td>
-              <td>{{this.playlist_id}}</td>
-              <td>{{this.song_id}}</td>
+              <td>{{this.name}}</td>
+              <td>{{this.albumTitle}}</td>
               <td>
                 <form
                   action="/playlists/{{../userId}}/deletesong/{{this.playlist_id}}/{{this.song_id}}"

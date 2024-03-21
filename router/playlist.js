@@ -7,10 +7,13 @@ const playRouter = Router();
 playRouter.get("/:userId/:playlistId", async (req, res) => {
   const { userId, playlistId } = req.params;
 
-  //   todo: join artist table
   const [songs] = await connection.query(
-    `SELECT * FROM songs INNER JOIN playlist_songs 
-      ON songs.id = playlist_songs.song_id 
+    `SELECT songs.id, songs.title as songTitle, songs.duration, art.name, alb.title as albumTitle
+      FROM songs
+      INNER JOIN playlist_songs 
+      ON songs.id = playlist_songs.song_id
+      LEFT JOIN artists as art on artist_id = art.id
+      LEFT JOIN albums as alb on album_id = alb.id
       WHERE playlist_id = ?`,
     playlistId
   );
