@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -10,49 +9,56 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
+    <style>
+      .signup-form { padding: 2rem; border-radius: 0.5rem; background-color:
+      #f8f9fa; box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); } body{ display:
+      flex; justify-content: center; height: 100vh; }
+    </style>
   </head>
   <body>
     <div class="container h-100">
       <div class="row h-100 justify-content-center align-items-center">
         <div class="col-md-4 col-sm-6 col-xs-12">
-          <form method="post" action="/auth/user/signup">
-            <h1>User Signup</h1>
-            <div class="form-group">
-              <label for="username">Username</label>
-              <input
-                type="text"
-                class="form-control"
-                id="username"
-                placeholder="Enter username"
-                name="username"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input
-                type="text"
-                class="form-control"
-                id="email"
-                placeholder="Enter email"
-                name="email"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="password"
-                placeholder="Enter password"
-                name="password"
-                required
-              />
-            </div>
-            <p>Already have a account? <a href="./login">Log in</a></p>
-            <button type="submit" class="btn btn-primary">Login</button>
-          </form>
+          <div class="signup-form">
+            <form method="post" action="/auth/user/signup">
+              <h1>User Signup</h1>
+              <div class="form-group mb-3">
+                <label for="username">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  placeholder="Enter username"
+                  name="username"
+                  required
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Enter email"
+                  name="email"
+                  required
+                />
+              </div>
+              <div class="form-group mb-3">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Enter password"
+                  name="password"
+                  required
+                />
+              </div>
+              <p>Already have an account? <a href="./login">Log in</a></p>
+              <button type="submit" class="btn btn-primary">Signup</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

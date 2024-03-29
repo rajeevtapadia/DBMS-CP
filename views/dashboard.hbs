@@ -2,59 +2,86 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Music Playlists</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
     <style>
-      /* Add any desired styles for the form and its elements */
+      /* Add custom styles here (optional) */ .playlist-table { margin-top:
+      2rem; } .playlist-table th, .playlist-table td { padding: 0.75rem;
+      vertical-align: middle; border: 1px solid #dee2e6; } .delete-button {
+      border: none; padding: 5px 10px; background-color: #dc3545; color: white;
+      border-radius: 4px; cursor: pointer; } .delete-button:hover {
+      background-color: #c8233c; }
     </style>
   </head>
   <body>
-    <h1>Welcome {{user.username}}</h1>
-    <h2>Your Playlists</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each playlists}}
+    <div class="container">
+      <h1 class="display-4">Welcome, {{user.username}}</h1>
+      <h2>Your Playlists</h2>
+      <table class="table table-striped playlist-table">
+        <thead>
           <tr>
-            <td>{{this.id}}</td>
-            <td><a href="/playlists/{{this.user_id}}/{{this.id}}">
-                {{this.name}}</a></td>
-            <td>
-              <form
-                action="/playlists/{{this.user_id}}/delete/{{this.id}}"
-                method="POST"
-                style="display: inline-block;"
-              >
-                {{#if csrfToken}}
-                  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
-                {{/if}}
-                <button type="submit">Delete</button>
-              </form>
-            </td>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Actions</th>
           </tr>
-        {{/each}}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {{#each playlists}}
+            <tr>
+              <td style="text-align: center;">{{this.id}}</td>
+              <td style="text-align: center;"><a
+                  href="/playlists/{{this.user_id}}/{{this.id}}"
+                  class="text-dark"
+                >{{this.name}}</a></td>
+              <td style="text-align: center;">
+                <form
+                  action="/playlists/{{this.user_id}}/delete/{{this.id}}"
+                  method="POST"
+                  style="display: inline-block;"
+                >
+                  {{#if csrfToken}}
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                  {{/if}}
+                  <button type="submit" class="delete-button">Delete</button>
+                </form>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
 
-    <h2>Create Playlist</h2>
-    <form action="/playlists/{{user.id}}/create" method="POST">
-      {{#if csrfToken}}
-        <input type="hidden" name="_csrf" value="{{csrfToken}}" />
-      {{/if}}
+      </table>
 
-      <label for="playlistName">Playlist Name:</label>
-      <input type="text" id="playlistName" name="name" required />
-      <br />
+      <h2>Create Playlist</h2>
+      <form action="/playlists/{{user.id}}/create" method="POST" class="mb-3">
+        {{#if csrfToken}}
+          <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+        {{/if}}
 
-      <button type="submit">Create Playlist</button>
-    </form>
+        <div class="mb-3">
+          <label for="playlistName" class="form-label">Playlist Name:</label>
+          <input
+            type="text"
+            id="playlistName"
+            name="name"
+            class="form-control"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Create Playlist</button>
+      </form>
 
-    <button><a href="search">Search</a></button>
+      <a href="search" class="btn btn-outline-secondary">Search</a>
+    </div>
 
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVFQWjxhNVAaIbKEkWvCOPvMwOZ6sSf8D1/5eIkNCodN4zZKHsO"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
