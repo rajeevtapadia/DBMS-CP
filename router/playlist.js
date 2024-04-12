@@ -17,7 +17,7 @@ playRouter.get("/:userId/:playlistId", async (req, res) => {
       WHERE playlist_id = ?`,
     playlistId
   );
-
+  console.log({ songs, playlistId, userId });
   res.render("playlist.hbs", { songs, playlistId, userId });
 });
 

@@ -17,6 +17,7 @@ artistDash.get("/:id", async (req, res) => {
     `SELECT * from songs where artist_id = ?`,
     id
   );
+  console.log((artist));
   res.render("artist-dashboard.hbs", { albums, artist, allSongs });
 });
 

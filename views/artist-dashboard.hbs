@@ -107,7 +107,7 @@
       </table>
 
       <h2>Add a Song</h2>
-      <form action="song/add" method="POST" class="mb-3">
+      <form action="{{artist.id}}/song/add" method="POST" class="mb-3">
         {{#if csrfToken}}
           <input type="hidden" name="_csrf" value="{{csrfToken}}" />
         {{/if}}

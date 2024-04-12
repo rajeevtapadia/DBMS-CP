@@ -13,7 +13,8 @@ albumRouter.get("/:artistId/:albumId", async (req, res) => {
       WHERE album_id = ?`,
     albumId
   );
-  console.log(songs);
+  // console.log(songs);
+  console.log({ songs, albumId, artistId })
 
   res.render("albums.hbs", { songs, albumId, artistId });
 });

@@ -42,7 +42,7 @@
               <td>{{this.name}}</td>
               <td>{{this.albumTitle}}</td>
               <td>
-                <form action="/playlists/{{../userId}}/deletesong/{{this.playlist_id}}/{{this.song_id}}" method="POST" style="display: inline-block;">
+                <form action="/playlists/{{../userId}}/deletesong/{{../playlistId}}/{{this.id}}" method="POST" style="display: inline-block;">
                   {{#if csrfToken}}
                   <input type="hidden" name="_csrf" value="{{csrfToken}}" />
                   {{/if}}
